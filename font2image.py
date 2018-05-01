@@ -43,18 +43,18 @@ def create_image(label, img_size):
     draw = ImageDraw.Draw(img)
 
     # Get size of the font and draw the token in the center of the blank image
-    w,h = font.getsize(char_map[label])
+    w, h = font.getsize(char_map[label])
     draw.text(((img_size[0]-w)/2, (img_size[1]-h)/2), char_map[label], 0, font)
 
     return img
 
-# Create a 50x50 image of the Alef token and save it to disk
+pathOutChars = "CorrectData/"
+
+# Create a 50x50 image of all characters and save it to disk with path stated in pathOutChars
+for charpair in char_map:
+    img = create_image(charpair, (50, 50))
+    img.save(pathOutChars + charpair + ".png")
+    print(charpair)
+
 # To get the raw data cast it to a numpy array
-img = create_image('Alef', (50, 50))
-img.save('CorrectData/example_alef.png')
 
-img = create_image('Ayin', (50, 50))
-img.save('CorrectData/example_ayin.png')
-
-# To show on the screen
-# img.show()
