@@ -14,7 +14,7 @@ pathOut3 = "/Users/olgamulava/Documents/Uni/5Groningen/HandwritingRecognition/Co
 
 # # Create a graph for one image P344-Fg001-R-C01-R01-fused.jpg
 # img = cv2.imread(pathIn + "P344-Fg001-R-C01-R01-fused.jpg", 0)  # 0 - grayscale
-# # cv2.imshow('My image', img)
+# cv2.imshow('My image', img)
 #
 # ret, imgBin = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU)
 #
@@ -65,3 +65,36 @@ for file in listing:
         # MEAN Binarization
         imgi = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
         cv2.imwrite(pathOut3 + file, imgi)
+
+
+image1 = cv2.imread(pathOut1 + "P344-Fg001-R-C01-R01-fused.jpg", 0)
+# cv2.imshow('My image', image1)
+# cv2.waitKey()
+
+# Template is one char
+template = cv2.imread("CorrectData/" + "Bet.png", 0)
+w, h = template.shape[::-1]
+
+# finding the location of a template image in a larger image
+res = cv2.matchTemplate(image1, template, cv2.TM_CCORR_NORMED)
+
+min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
+
+top_left = max_loc
+bottom_right = (top_left[0] + w, top_left[1] + h)
+
+cv2.rectangle(image1, top_left, bottom_right, (100, 100, 50), 2)
+cv2.imwrite("my.png", image1)
+# cv2.imshow("TM_CCORR_NORMED", image1)
+cv2.waitKey()
+
+print(top_left, bottom_right)
+
+# # plt.subplot(121)
+# # plt.imshow(res, cmap='gray')
+# plt.xticks([])
+# plt.yticks([])
+# # plt.subplot(122)
+# plt.imshow(image1, cmap='gray')
+#
+# plt.show()
