@@ -78,6 +78,7 @@ w, h = template.shape[::-1]
 # finding the location of a template image in a larger image
 res = cv2.matchTemplate(image1, template, cv2.TM_CCORR_NORMED)
 
+# n
 min_val, max_val, min_loc, max_loc = cv2.minMaxLoc(res)
 
 top_left = max_loc
