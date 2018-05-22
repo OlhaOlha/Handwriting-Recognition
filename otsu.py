@@ -5,12 +5,18 @@ import os
 from PIL import Image, ImageFont, ImageDraw
 
 # Folder with original images
-pathIn = "/Users/olgamulava/Documents/Uni/5Groningen/HandwritingRecognition/Code/ImageData/"
+pathIn = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\image-data\\"
 
 # Folders for output
-pathOut1 = "/Users/olgamulava/Documents/Uni/5Groningen/HandwritingRecognition/Code/OutputOTSU/"
-pathOut2 = "/Users/olgamulava/Documents/Uni/5Groningen/HandwritingRecognition/Code/OutputGAU/"
-pathOut3 = "/Users/olgamulava/Documents/Uni/5Groningen/HandwritingRecognition/Code/OutputMEAN/"
+pathOut1 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\OTSU\\"
+pathOut2 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\GAU\\"
+pathOut3 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\MEAN\\"
+pathOut4 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\Inverse\\"
+pathOut5 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\Sauvola\\"
+
+pathOut7 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\Tozero\\"
+pathOut8 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\Triangle\\"
+pathOut9 = "C:\\Users\\Janak\\Desktop\\Handwriting Recognition\\Output\\Trunc\\"
 
 # # Create a graph for one image P344-Fg001-R-C01-R01-fused.jpg
 # img = cv2.imread(pathIn + "P344-Fg001-R-C01-R01-fused.jpg", 0)  # 0 - grayscale
@@ -65,3 +71,24 @@ for file in listing:
         # MEAN Binarization
         imgi = cv2.adaptiveThreshold(img, 255, cv2.ADAPTIVE_THRESH_MEAN_C, cv2.THRESH_BINARY, 11, 2)
         cv2.imwrite(pathOut3 + file, imgi)
+
+        # Inverse Binarization
+        ret, imgi = cv2.threshold(img, 0, 255, cv2.THRESH_BINARY_INV + cv2.THRESH_OTSU)
+        cv2.imwrite(pathOut4 + file, imgi)
+
+        # Sauvola Binarization
+        imgi = cv2.adaptiveThreshold(img, 255, cv2.CALIB_CB_ADAPTIVE_THRESH , cv2.THRESH_BINARY, 11, 2)
+        cv2.imwrite(pathOut5 + file, imgi)
+
+
+        #tozero
+        ret, imgi = cv2.threshold(img, 0, 255, cv2.THRESH_TOZERO + cv2.THRESH_OTSU)
+        cv2.imwrite(pathOut7 + file, imgi)
+
+        #triangle
+        ret, imgi = cv2.threshold(img, 0, 255, cv2.THRESH_TRIANGLE + cv2.THRESH_BINARY)
+        cv2.imwrite(pathOut8 + file, imgi)
+
+        #trunc
+        ret, imgi = cv2.threshold(img, 0, 255, cv2.THRESH_TRUNC + cv2.THRESH_OTSU)
+        cv2.imwrite(pathOut9 + file, imgi)
